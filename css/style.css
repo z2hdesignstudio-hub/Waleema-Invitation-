@@ -389,8 +389,14 @@ section{padding-left:clamp(16px,5vw,32px);padding-right:clamp(16px,5vw,32px)}
 .foot__bism{font-family:var(--ruqaa);font-weight:700;font-size:clamp(1.7rem,6vw,2.2rem);line-height:1.9;
   background:var(--gold-text);background-size:260% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
 .foot__names{font-family:var(--script);font-size:clamp(1.6rem,6.6vw,2.2rem);color:var(--gold-300);margin-top:.4rem;line-height:1.5}
+.foot__names{word-spacing:.12em}
+.foot__couple{display:inline-block;white-space:nowrap}
+.foot__and{font-family:var(--serif);font-style:italic;font-size:.6em;color:rgba(251,247,236,.7);margin:0 .5em}
+@media (max-width:640px){.foot__and{display:block;margin:-.1em 0}}
 .foot__date{font-family:var(--caps);font-size:.76rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ivory);margin-top:.5rem}
 .foot__dua{font-style:italic;color:rgba(251,247,236,.65);margin-top:1.4rem;font-size:1.05rem}
+.foot__credit{width:fit-content;margin:2.4rem auto 0;padding-top:1rem;border-top:1px solid rgba(217,180,90,.25);
+  font-family:var(--caps);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(236,210,131,.75);padding-left:.2em}
 
 /* ---- Music toggle ---- */
 .music{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));z-index:60;width:52px;height:52px;border-radius:50%;
