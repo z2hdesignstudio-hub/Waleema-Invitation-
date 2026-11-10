@@ -10,7 +10,7 @@
      Start of the event, used by the countdown (Sri Lanka time, +05:30).
    ------------------------------------------------------------------ */
 window.INVITE_CONFIG = {
-  rsvpEndpoint: "",
+  rsvpEndpoint: "https://script.google.com/macros/s/AKfycbzBuIQ57U6aa6lg7lX9QvLf71NsTBz5RW1A2vlEHsoEnCIfQnhNuRnUTMouuPgsMRkn/exec",
   eventISO: "2026-12-23T12:30:00+05:30",
   helpPhone: "077 897 7028"
 };
