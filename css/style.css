@@ -8,6 +8,7 @@
 @font-face{font-family:"Aref Ruqaa";font-weight:700;font-display:swap;src:url("../assets/fonts/aref-ruqaa-arabic-700-normal.woff2") format("woff2");unicode-range:U+0600-06FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE80-FEFC}
 @font-face{font-family:"Amiri";font-weight:400;font-display:swap;src:url("../assets/fonts/amiri-arabic-400-normal.woff2") format("woff2");unicode-range:U+0600-06FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE80-FEFC}
 @font-face{font-family:"Great Vibes";font-weight:400;font-display:swap;src:url("../assets/fonts/great-vibes-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:"Alex Brush";font-weight:400;font-display:swap;src:url("../assets/fonts/alex-brush-latin-400-normal.woff2") format("woff2")}
 @font-face{font-family:"Cinzel";font-weight:400;font-display:swap;src:url("../assets/fonts/cinzel-latin-400-normal.woff2") format("woff2")}
 @font-face{font-family:"Cinzel";font-weight:600;font-display:swap;src:url("../assets/fonts/cinzel-latin-600-normal.woff2") format("woff2")}
 @font-face{font-family:"Cormorant Garamond";font-weight:400;font-style:normal;font-display:swap;src:url("../assets/fonts/cormorant-garamond-latin-400-normal.woff2") format("woff2")}
@@ -39,6 +40,7 @@
   --serif:"Cormorant Garamond","Times New Roman",serif;
   --caps:"Cinzel","Cormorant Garamond",serif;
   --script:"Great Vibes","Brush Script MT",cursive;
+  --script-cap:"Alex Brush","Great Vibes",cursive;
   --ruqaa:"Aref Ruqaa","Amiri","Noto Naskh Arabic",serif;
   --naskh:"Amiri","Noto Naskh Arabic","Times New Roman",serif;
 
@@ -199,6 +201,7 @@ html:not(.js) .arch__line{stroke-dashoffset:0}
 .couple{display:flex;flex-direction:column;align-items:center;line-height:1.15}
 .couple__name{font-family:var(--script);font-size:clamp(1.9rem,8.2vw,3rem);color:var(--gold-300);text-shadow:0 2px 14px rgba(0,0,0,.4);padding:.04em .1em}
 .couple__and{font-style:italic;font-size:clamp(1.3rem,5vw,1.7rem);color:var(--gold-400);margin:-.1em 0}
+.cap-a{font-family:var(--script-cap)}
 .couples__star{width:clamp(20px,5vw,30px);color:var(--gold-400)}
 .couples__star{height:auto}
 
@@ -308,17 +311,27 @@ section{padding-left:clamp(16px,5vw,32px);padding-right:clamp(16px,5vw,32px)}
 /* ---- Venue ---- */
 .venue{text-align:center;padding-bottom:clamp(60px,10vh,100px)}
 .venue__addr{font-family:var(--caps);font-size:clamp(.8rem,3vw,1rem);letter-spacing:.2em;text-transform:uppercase;color:var(--ivory);margin-top:.3rem}
-.map{width:min(100%,560px);margin:1.6rem auto 1.8rem;border-radius:200px 200px 8px 8px;overflow:hidden;
+.map{--h:clamp(380px,100vw,480px);--crop:190px;position:relative;height:var(--h);width:min(100%,560px);margin:1.6rem auto 1.8rem;border-radius:200px 200px 8px 8px;overflow:hidden;
   border:1px solid rgba(217,180,90,.8);box-shadow:0 0 0 6px rgba(10,19,48,.9),0 0 0 7px rgba(217,180,90,.35),0 24px 60px rgba(0,0,0,.5);background:var(--night-800)}
-.map iframe{display:block;width:100%;height:clamp(320px,90vw,420px);border:0;filter:saturate(.85) contrast(1.02)}
+/* The iframe is taller than the frame and shifted up, so Google's own top-left card is cropped out.
+   The bottom stays visible, which keeps Google's logo and terms. */
+.map iframe{position:absolute;left:0;top:calc(var(--crop) * -1);display:block;width:100%;height:calc(var(--h) + var(--crop));border:0;filter:saturate(.85) contrast(1.02)}
 
-/* ---- Dress code ---- */
-.dress{text-align:center;padding-bottom:clamp(60px,10vh,100px)}
-.dress__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(14px,3vw,24px);max-width:600px;margin:1.6rem auto 0}
-.dress__item{padding:1.8rem 1.4rem 1.6rem;border:1px solid rgba(217,180,90,.55);border-radius:84px 84px 6px 6px;background:rgba(16,28,68,.55)}
-.dress__item svg{width:22px;height:22px;margin:0 auto .6rem;color:var(--gold-400)}
-.dress__item h3{font-family:var(--caps);font-weight:600;font-size:.82rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-200);padding-left:.22em}
-.dress__item p{margin-top:.5rem;color:rgba(251,247,236,.82);font-size:1.05rem;line-height:1.45;max-width:24ch;margin-left:auto;margin-right:auto}
+/* Our own card, directly under the red pin (the pin sits at the middle of the iframe). */
+.map__card{position:absolute;left:50%;top:calc((var(--h) - var(--crop)) / 2 + 20px);transform:translateX(-50%);z-index:2;
+  width:min(236px,78%);padding:.85rem .9rem .9rem;text-align:center;color:var(--ink);
+  background:var(--ivory);border:1px solid rgba(196,154,60,.8);border-radius:4px;box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.map__card::before{content:"";position:absolute;left:50%;top:-7px;width:12px;height:12px;background:var(--ivory);
+  border-left:1px solid rgba(196,154,60,.8);border-top:1px solid rgba(196,154,60,.8);transform:translateX(-50%) rotate(45deg)}
+.map__name{font-family:var(--caps);font-weight:600;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;line-height:1.3}
+.map__place{font-size:1rem;color:var(--ink-soft);line-height:1.2;margin-bottom:.6rem}
+.map__actions{display:flex;gap:.5rem;justify-content:center;align-items:stretch}
+.map__open{flex:1;display:flex;align-items:center;justify-content:center;padding:.6rem .5rem;border-radius:2px;background:var(--night-900);color:var(--gold-200);
+  font-family:var(--caps);font-weight:600;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background .25s}
+.map__open:hover{background:var(--night-700)}
+.map__dir{flex:0 0 2.5rem;display:grid;place-items:center;border:1px solid var(--gold-500);border-radius:2px;color:#8a6420;transition:background .25s,color .25s}
+.map__dir svg{width:1.3rem;height:1.3rem}
+.map__dir:hover{background:var(--gold-500);color:#fff}
 
 /* ---- RSVP ---- */
 .rsvp{padding-bottom:clamp(60px,10vh,100px)}
