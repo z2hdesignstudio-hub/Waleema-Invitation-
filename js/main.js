@@ -98,15 +98,14 @@
     opened = true;
     playMusic();                       // must run inside the tap for browsers to allow audio
     musicBtn.hidden = false;
-    var k = reduceMotion ? 0.05 : 1;
     curtain.classList.add('is-opening');
-    setTimeout(function () { curtain.classList.add('is-open'); }, 450 * k);
-    setTimeout(function () {
+    if (window.WaleemaCurtain) window.WaleemaCurtain.play();   // starts in the same frame as the tap
+    var k = reduceMotion ? 0.05 : 1;
+    setTimeout(function () {                                   // page wakes up while the cloth is still moving
       body.classList.add('is-revealed');
       body.classList.remove('is-locked');
-    }, 1500 * k);
-    setTimeout(function () { curtain.classList.add('is-gone'); }, 3300 * k);
-    setTimeout(function () { curtain.remove(); }, 4500 * k + 200);
+    }, 600 * k);
+    setTimeout(function () { curtain.remove(); }, 1100);
   }
   openBtn.addEventListener('click', openCurtain);
 
